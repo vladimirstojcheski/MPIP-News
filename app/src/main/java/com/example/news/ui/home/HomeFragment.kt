@@ -14,7 +14,7 @@ import com.example.news.ui.adapter.PostAdapter
 
 class HomeFragment : Fragment() {
 
-    private lateinit var HomeViewModel: HomeViewModel
+    private lateinit var homeViewModel: HomeViewModel
     private var _binding: FragmentHomeBinding? = null
 
     private lateinit var postRecyclerView: RecyclerView
@@ -29,8 +29,7 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        HomeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
+        homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -43,7 +42,7 @@ class HomeFragment : Fragment() {
 
         postRecyclerView = view.findViewById(R.id.postsRecyclerView)
         postRecyclerView.layoutManager = LinearLayoutManager(activity)
-        recyclerViewAdapter = PostAdapter(HomeViewModel.posts)
+        recyclerViewAdapter = PostAdapter(homeViewModel.posts)
         postRecyclerView.setHasFixedSize(true)
         postRecyclerView.adapter = recyclerViewAdapter
         
