@@ -3,19 +3,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
+    app:startDestination="@+id/nav_news">
 
     <fragment
-        android:id="@+id/nav_home"
-        android:name="com.example.news.ui.home.HomeFragment"
-        android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
+        android:id="@+id/nav_news"
+        android:name="com.example.news.ui.home.NewsFragment"
+        android:label="@string/menu_news"
+        tools:layout="@layout/fragment_news">
+        <action
+            android:id="@+id/action_nav_home_to_nav_gallery"
+            app:destination="@id/nav_category" />
+    </fragment>
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.example.news.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        android:id="@+id/nav_category"
+        android:name="com.example.news.ui.gallery.CategoryFragment"
+        android:label="@string/menu_category"
+        tools:layout="@layout/fragment_category">
+        <action
+            android:id="@+id/action_nav_gallery_to_nav_home"
+            app:destination="@id/nav_news" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_slideshow"

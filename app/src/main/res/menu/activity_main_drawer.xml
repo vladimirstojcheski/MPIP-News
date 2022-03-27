@@ -1,17 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:showIn="navigation_view">
+    tools:showIn="navigation_view"
+    android:layoutDirection="rtl"
+    android:textDirection="rtl">
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_home"
+            android:id="@+id/nav_news"
             android:icon="@drawable/ic_menu_camera"
-            android:title="@string/menu_home" />
+            android:title="@string/menu_news" />
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/nav_category"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/menu_gallery" />
+            android:title="@string/menu_category" />
+        <item
+            android:id="@+id/footer_spacer_2"
+            android:checkable="true"
+            android:enabled="true"
+            android:title="" />
+        <item
+            android:id="@+id/footer_spacer_1"
+            android:checkable="false"
+            android:enabled="false"
+            android:title="" />
+        <item
+            android:id="@+id/footer_spacer_3"
+            android:checkable="false"
+            android:enabled="false"
+            android:title="" />
+        <item
+            android:id="@+id/footer_spacer_4"
+            android:checkable="false"
+            android:enabled="false"
+            android:title="" />
+        <item
+            android:id="@+id/footer_spacer_5"
+            android:checkable="false"
+            android:enabled="false"
+            android:title="" />
+        <item
+            android:id="@+id/footer_spacer_6"
+            android:checkable="false"
+            android:enabled="false"
+            android:title="" />
         <item
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/ic_menu_slideshow"

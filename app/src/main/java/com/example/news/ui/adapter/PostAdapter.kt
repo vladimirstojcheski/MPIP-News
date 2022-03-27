@@ -5,14 +5,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.news.R
 import com.example.news.data.model.Post
 
-class PostAdapter(var allPosts: MutableList<Post>): RecyclerView.Adapter<PostAdapter.ViewHolder>() {
+class PostAdapter(var allPosts: MutableList<Post>, private val postClickListener: OnPostListener): RecyclerView.Adapter<PostAdapter.ViewHolder>() {
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view){
 
         val postTitle: TextView
         val postUrl: TextView
@@ -36,9 +37,24 @@ class PostAdapter(var allPosts: MutableList<Post>): RecyclerView.Adapter<PostAda
         holder.postTitle.text = currentPost.title
         holder.postUrl.text = currentPost.postUrl
         Glide.with(holder.itemView).load(currentPost.thumbnail).into(holder.postThumbnail)
+
+        holder.itemView.setOnClickListener{
+            postClickListener.onPostClick(currentPost)
+        }
     }
 
     override fun getItemCount(): Int {
         return this.allPosts.size
     }
+
+    fun updateData(posts: MutableList<Post>)
+    {
+        this.allPosts = posts
+        notifyDataSetChanged()
+    }
+
+}
+
+interface OnPostListener{
+    fun onPostClick(post: Post)
 }

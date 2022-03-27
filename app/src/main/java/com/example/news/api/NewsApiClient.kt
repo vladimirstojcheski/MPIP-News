@@ -12,7 +12,7 @@ class NewsApiClient {
 
             if (newsApi == null) {
                 newsApi = Retrofit.Builder()
-                    .baseUrl("http://localhost:8080/")
+                    .baseUrl("http://192.168.1.10:8080/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .build()
                     .create(NewsApi::class.java)
