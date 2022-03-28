@@ -8,16 +8,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.news.MainActivity
 import com.example.news.R
 import com.example.news.api.NewsApi
 import com.example.news.api.NewsApiClient
+import com.example.news.data.model.Category
 import com.example.news.data.model.Post
 import com.example.news.databinding.FragmentNewsBinding
 import com.example.news.ui.adapter.OnPostListener
 import com.example.news.ui.adapter.PostAdapter
+import kotlinx.coroutines.CoroutineScope
 
 class NewsFragment : Fragment(), OnPostListener {
 
@@ -48,10 +52,14 @@ class NewsFragment : Fragment(), OnPostListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val activity = activity as MainActivity
+        val selectedCategory = activity.getCategory()
 
-        newsApiClient = NewsApiClient.getNewsApi()!!
-
-        newsViewModel.searchAllPosts()
+        if (selectedCategory.isNullOrEmpty())
+            newsViewModel.searchAllPosts()
+        else{
+            newsViewModel.searchPostsByCategory(selectedCategory)
+        }
 
         newsViewModel.getPostsMutableLiveData()
             .observe(viewLifecycleOwner,

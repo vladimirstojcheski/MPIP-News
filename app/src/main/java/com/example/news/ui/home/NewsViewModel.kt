@@ -44,6 +44,19 @@ class NewsViewModel : ViewModel() {
         })
     }
 
+    fun searchPostsByCategory(category: String){
+        newsApiClient.getPostsByCategory(category).enqueue(object : Callback<List<Post>> {
+            override fun onResponse(call: Call<List<Post>>?, response: Response<List<Post>>?) {
+                posts.value = response?.body()
+            }
+
+            override fun onFailure(call: Call<List<Post>>?, t: Throwable?) {
+                TODO("Not yet implemented")
+            }
+
+        })
+    }
+
     fun getPostsMutableLiveData(): MutableLiveData<List<Post>>
     {
         return posts

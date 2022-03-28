@@ -16,12 +16,10 @@ class PostAdapter(var allPosts: MutableList<Post>, private val postClickListener
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view){
 
         val postTitle: TextView
-        val postUrl: TextView
         val postThumbnail: ImageView
 
         init {
             postTitle = view.findViewById(R.id.postTitleId)
-            postUrl = view.findViewById(R.id.postUrlId)
             postThumbnail = view.findViewById(R.id.postThumbnailId)
         }
     }
@@ -35,7 +33,6 @@ class PostAdapter(var allPosts: MutableList<Post>, private val postClickListener
         val currentPost = allPosts[position]
 
         holder.postTitle.text = currentPost.title
-        holder.postUrl.text = currentPost.postUrl
         Glide.with(holder.itemView).load(currentPost.thumbnail).into(holder.postThumbnail)
 
         holder.itemView.setOnClickListener{

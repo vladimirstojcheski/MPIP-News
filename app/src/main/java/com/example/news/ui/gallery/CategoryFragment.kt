@@ -5,16 +5,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.news.MainActivity
 import com.example.news.R
 import com.example.news.data.model.Category
 import com.example.news.databinding.FragmentCategoryBinding
 import com.example.news.ui.adapter.CategoryAdapter
 import com.example.news.ui.adapter.OnCategoryListener
+import com.example.news.ui.home.NewsFragment
 
 class CategoryFragment : Fragment(), OnCategoryListener {
 
@@ -70,6 +74,10 @@ class CategoryFragment : Fragment(), OnCategoryListener {
     }
 
     override fun onCategoryClick(category: Category) {
+        val activity = activity as MainActivity
+        activity.setCategory(category.name)
+        val result = category.name
+        setFragmentResult("requestKey", bundleOf("bundleKey" to result))
         findNavController().navigate(R.id.action_nav_gallery_to_nav_home)
     }
 
