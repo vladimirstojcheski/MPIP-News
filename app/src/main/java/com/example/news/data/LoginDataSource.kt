@@ -1,7 +1,11 @@
 package com.example.news.data
 
 import com.example.news.data.model.LoggedInUser
-import java.io.IOException
+
+
+
+
+
 
 /**
  * Class that handles authentication w/ login credentials and retrieves user information.
@@ -9,13 +13,8 @@ import java.io.IOException
 class LoginDataSource {
 
     fun login(username: String, password: String): Result<LoggedInUser> {
-        try {
-            // TODO: handle loggedInUser authentication
-            val fakeUser = LoggedInUser(java.util.UUID.randomUUID().toString(), "Jane Doe")
-            return Result.Success(fakeUser)
-        } catch (e: Throwable) {
-            return Result.Error(IOException("Error logging in", e))
-        }
+        val user = LoggedInUser(username, "")
+        return Result.Success(user)
     }
 
     fun logout() {

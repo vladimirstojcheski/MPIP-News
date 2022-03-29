@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
@@ -21,6 +22,7 @@ import com.example.news.data.model.Post
 import com.example.news.databinding.FragmentNewsBinding
 import com.example.news.ui.adapter.OnPostListener
 import com.example.news.ui.adapter.PostAdapter
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.CoroutineScope
 
 class NewsFragment : Fragment(), OnPostListener {
@@ -32,6 +34,8 @@ class NewsFragment : Fragment(), OnPostListener {
     private lateinit var recyclerViewAdapter: PostAdapter
 
     private lateinit var newsApiClient: NewsApi
+
+    private val mAuth = FirebaseAuth.getInstance()
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -54,6 +58,10 @@ class NewsFragment : Fragment(), OnPostListener {
         super.onViewCreated(view, savedInstanceState)
         val activity = activity as MainActivity
         val selectedCategory = activity.getCategory()
+
+//        val userTextView: TextView = view.findViewById<TextView>(R.id.userTextView)
+//        if (mAuth.currentUser != null)
+//            userTextView.text = mAuth.currentUser!!.email
 
         if (selectedCategory.isNullOrEmpty())
             newsViewModel.searchAllPosts()

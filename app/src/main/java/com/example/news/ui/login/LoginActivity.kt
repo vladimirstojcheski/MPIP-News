@@ -17,11 +17,14 @@ import com.example.news.MainActivity
 import com.example.news.databinding.ActivityLoginBinding
 
 import com.example.news.R
+import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var loginViewModel: LoginViewModel
     private lateinit var binding: ActivityLoginBinding
+
+    private val mAuth: FirebaseAuth = FirebaseAuth.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +36,7 @@ class LoginActivity : AppCompatActivity() {
         val password = binding.password
         val login = binding.login
         val loading = binding.loading
+        val register = binding.register
 
         loginViewModel = ViewModelProvider(this, LoginViewModelFactory())
             .get(LoginViewModel::class.java)
@@ -85,7 +89,7 @@ class LoginActivity : AppCompatActivity() {
             setOnEditorActionListener { _, actionId, _ ->
                 when (actionId) {
                     EditorInfo.IME_ACTION_DONE ->
-                        loginViewModel.login(
+                        login(
                             username.text.toString(),
                             password.text.toString()
                         )
@@ -95,9 +99,20 @@ class LoginActivity : AppCompatActivity() {
 
             login.setOnClickListener {
                 loading.visibility = View.VISIBLE
-                loginViewModel.login(username.text.toString(), password.text.toString())
+                login(username.text.toString(), password.text.toString())
+//                loginViewModel.login(username.text.toString(), password.text.toString())
+            }
+
+            register?.setOnClickListener{
+                register(username.text.toString(), password.text.toString())
             }
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if (loggedIn())
+            navigateToApp()
     }
 
     private fun updateUiWithUser(model: LoggedInUserView) {
@@ -115,6 +130,51 @@ class LoginActivity : AppCompatActivity() {
 
     private fun showLoginFailed(@StringRes errorString: Int) {
         Toast.makeText(applicationContext, errorString, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun login(emailValue: String, passwordValue: String) {
+        mAuth.signInWithEmailAndPassword(emailValue, passwordValue)
+            .addOnCompleteListener(
+                this
+            ) { task ->
+                if (task.isSuccessful) {
+                    navigateToApp()
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Toast.makeText(this, "wrong credentials", Toast.LENGTH_SHORT).show()
+                }
+
+                // ...
+            }
+    }
+
+    private fun register(emailValue: String, passwordValue: String) {
+        mAuth.createUserWithEmailAndPassword(emailValue, passwordValue)
+            .addOnCompleteListener(
+                this
+            ) { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Toast.makeText(this, "Registration is successful", Toast.LENGTH_SHORT)
+                        .show()
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Toast.makeText(this, "Registration is not successful", Toast.LENGTH_SHORT)
+                        .show()
+                }
+
+                // ...
+            }
+    }
+
+    private fun navigateToApp() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    private fun loggedIn(): Boolean {
+        return mAuth.currentUser != null
     }
 }
 
